@@ -3,20 +3,68 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tasks/models/task_model.dart';
 import 'package:tasks/ui/general/colors.dart';
+import 'package:tasks/ui/widgets/button_normal_widget.dart';
 import 'package:tasks/ui/widgets/general_widgets.dart';
 import 'package:tasks/ui/widgets/item_task_widget.dart';
-import 'package:tasks/ui/widgets/textFlied_search_widget.dart';
+import 'package:tasks/ui/widgets/textFlied_normal_widget.dart';
 
 class HomePage extends StatelessWidget {
   CollectionReference taskReference =
       FirebaseFirestore.instance.collection("tasks");
+
+  showTaskForm(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(22.0),
+              topRight: Radius.circular(22.0),
+            ),
+          ),
+          padding: const EdgeInsets.all(14.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Agregar Tarea",
+                style: TextStyle(
+                  fontSize: 15.0,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              divider6(),
+              TextFieldNormalWidget(
+                hintText: "Titulo",
+                icon: Icons.text_fields,
+              ),
+              divider10(),
+              TextFieldNormalWidget(
+                hintText: "Description",
+                icon: Icons.description,
+              ),
+              divider10(),
+              divider10(),
+              ButtonNormalWidget(),
+              divider10(),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: KBrandSecondaryColor,
       floatingActionButton: InkWell(
-        onTap: () {},
+        onTap: () {
+          showTaskForm(context);
+        },
         borderRadius: BorderRadius.circular(14.0),
         child: Container(
           padding: const EdgeInsets.symmetric(
@@ -88,7 +136,10 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     divider10(),
-                    TextFieldSearchWidget(),
+                    TextFieldNormalWidget(
+                      hintText: "Buscar Tarea ...",
+                      icon: Icons.search,
+                    ),
                   ],
                 ),
               ),
