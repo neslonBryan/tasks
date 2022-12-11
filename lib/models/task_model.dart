@@ -12,6 +12,7 @@ class TaskModel {
     required this.category,
     required this.status,
   });
+
   factory TaskModel.fromJson(Map<String, dynamic> json) => TaskModel(
         title: json["title"],
         description: json["description"],
@@ -19,4 +20,12 @@ class TaskModel {
         category: json["category"],
         status: json["status"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "date": date,
+        "category": category,
+        "status": true,
+      };
 }

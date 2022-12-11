@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tasks/models/task_model.dart';
+import 'package:tasks/services/my_service_firestore.dart';
 import 'package:tasks/ui/widgets/textFlied_normal_widget.dart';
 
 import '../general/colors.dart';
@@ -13,6 +15,8 @@ class Taskformwidget extends StatefulWidget {
 }
 
 class _TaskformwidgetState extends State<Taskformwidget> {
+  MyServiceFirestore taskService = MyServiceFirestore(collection: "tasks");
+
   final formKey = GlobalKey<FormState>();
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -39,6 +43,27 @@ class _TaskformwidgetState extends State<Taskformwidget> {
     if (datetime != null) {
       _dateController.text = datetime.toString().substring(0, 10);
       setState(() {});
+    }
+  }
+
+  registerTask() {
+    if (formKey.currentState!.validate()) {
+      TaskModel taskModel = TaskModel(
+        title: _titleController.text,
+        description: _descriptionController.text,
+        date: _dateController.text,
+        category: categorySelected,
+        status: true,
+      );
+      taskService.addTask(taskModel).then((value) {
+        if (value.isNotEmpty) {
+          Navigator.pop(context);
+          showSnackBarSuccess(context, "La tarea fue registrada con éxito");
+        }
+      }).catchError((error) {
+        showSnackBarError(
+            context, "Hubo un inconveniente , intentalo otra vez");
+      });
     }
   }
 
@@ -149,7 +174,7 @@ class _TaskformwidgetState extends State<Taskformwidget> {
             ),
             ButtonNormalWidget(
               onPressed: () {
-                if (formKey.currentState!.validate()) {}
+                registerTask();
               },
             ),
             divider10(),
