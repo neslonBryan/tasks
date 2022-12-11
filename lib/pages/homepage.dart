@@ -28,6 +28,7 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(14.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 "Agregar Tarea",
@@ -47,6 +48,50 @@ class HomePage extends StatelessWidget {
                 icon: Icons.description,
               ),
               divider10(),
+              Text("Categoria: "),
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                runAlignment: WrapAlignment.center,
+                spacing: 10.0,
+                children: [
+                  FilterChip(
+                    selected: true,
+                    backgroundColor: KBrandSecondaryColor,
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    selectedColor: categoryColor["Personal"],
+                    checkmarkColor: Colors.white,
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    label: Text("Personal"),
+                    onSelected: (bool value) {},
+                  ),
+                  FilterChip(
+                    selected: true,
+                    backgroundColor: KBrandSecondaryColor,
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    selectedColor: categoryColor["Trabajo"],
+                    checkmarkColor: Colors.white,
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    label: Text("Trabajo"),
+                    onSelected: (bool value) {},
+                  ),
+                  FilterChip(
+                    selected: true,
+                    backgroundColor: KBrandSecondaryColor,
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    selectedColor: categoryColor["Otro"],
+                    checkmarkColor: Colors.white,
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    label: Text("Otro"),
+                    onSelected: (bool value) {},
+                  ),
+                ],
+              ),
               divider10(),
               ButtonNormalWidget(),
               divider10(),
