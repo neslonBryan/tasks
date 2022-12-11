@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/general_widgets.dart';
+import 'package:tasks/ui/widgets/item_task_widget.dart';
 import 'package:tasks/ui/widgets/textFlied_search_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -104,67 +105,12 @@ class HomePage extends StatelessWidget {
                       color: KBrandPrimaryColor.withOpacity(0.85),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 14.0, vertical: 16.0),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(14.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.04),
-                            offset: const Offset(4, 4),
-                            blurRadius: 12.0,
-                          )
-                        ]),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                            vertical: 2.5,
-                          ),
-                          decoration: BoxDecoration(
-                              color: Color(0xff3E80FF),
-                              borderRadius: BorderRadius.circular(6.0)),
-                          child: Text(
-                            "Personal",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13.0,
-                            ),
-                          ),
-                        ),
-                        divider3(),
-                        Text(
-                          "asdsadsadsadsaasdasdas",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: KBrandPrimaryColor.withOpacity(0.85),
-                          ),
-                        ),
-                        Text(
-                          "asdsadsadsaasdsadsadsadsaasdasdasasdsadsadsadsaasdasdasdsaasdasdasasdsadsadsadsaasdasdas",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w500,
-                            color: KBrandPrimaryColor.withOpacity(0.75),
-                          ),
-                        ),
-                        divider6(),
-                        Text(
-                          "10/12/2022",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w500,
-                            color: KBrandPrimaryColor.withOpacity(0.75),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                  ItemTaskWidget(),
+                  ItemTaskWidget(),
+                  ItemTaskWidget(),
+                  ItemTaskWidget(),
+                  ItemTaskWidget(),
+                  ItemTaskWidget(),
                 ],
               ),
             ),
