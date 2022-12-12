@@ -15,4 +15,12 @@ class MyServiceFirestore {
     String id = documentReference.id;
     return id;
   }
+
+  Future<void> finishedTask(String taskId) async {
+    await _collectionReference.doc(taskId).update(
+      {
+        "status": false,
+      },
+    );
+  }
 }
