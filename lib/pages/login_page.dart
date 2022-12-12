@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tasks/pages/register_pages.dart';
 import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/button_custom_widget.dart';
 import 'package:tasks/ui/widgets/button_normal_widget.dart';
@@ -72,6 +73,33 @@ class _LoginPageState extends State<LoginPage> {
                 icon: "facebook",
                 color: Color(0xff507CC0),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  divider10(),
+                  Text(
+                    "Aún no estás registrado?",
+                  ),
+                  divider10(),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RegisterPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      "Registrate",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: KBrandPrimaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
