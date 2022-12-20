@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tasks/pages/homepage.dart';
 import 'package:tasks/pages/register_pages.dart';
 import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/button_custom_widget.dart';
@@ -16,8 +19,38 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final formKey = GlobalKey<FormState>();
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
+
+  _login() async {
+    try {
+      if (formKey.currentState!.validate()) {
+        UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailcontroller.text,
+          password: _passwordcontroller.text,
+        );
+        if (userCredential.user != null) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => HomePage()),
+              (route) => false);
+        }
+      }
+    } on FirebaseAuthException catch (error) {
+      if (error.code == "invalid-email") {
+        showSnackBarError(context, "El correo electronico es invalido");
+      } else if (error.code == "user-not-found") {
+        showSnackBarError(context, "El usuario no esta registrado");
+      } else if (error.code == "wrong-password") {
+        showSnackBarError(context, "La contraseña es incorrecta");
+      }
+    }
+  }
+
+  _loginWithGoogle() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,85 +58,92 @@ class _LoginPageState extends State<LoginPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
-          child: Column(
-            children: [
-              divider40(),
-              SvgPicture.asset(
-                'assets/images/login.svg',
-                height: 180.0,
-              ),
-              divider30(),
-              Text(
-                "Iniciar Sesión",
-                style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w600,
-                  color: KBrandPrimaryColor,
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                divider40(),
+                SvgPicture.asset(
+                  'assets/images/login.svg',
+                  height: 180.0,
                 ),
-              ),
-              divider10(),
-              TextFieldNormalWidget(
-                hintText: "Correo electrónico",
-                icon: Icons.email,
-                controller: _emailcontroller,
-              ),
-              divider20(),
-              TextFieldPasswordWidget(
-                controller: _passwordcontroller,
-              ),
-              divider20(),
-              ButtonCustonWidget(
-                text: "Iniciar Sesión",
-                icon: "check",
-                color: KBrandPrimaryColor,
-                onPressed: () {},
-              ),
-              divider20(),
-              Text(
-                "O ingresa con tus redes sociales",
-              ),
-              divider20(),
-              ButtonCustonWidget(
-                text: "Iniciar sesión con Google",
-                icon: "google",
-                color: Color(0xfff84b2a),
-                onPressed: () {},
-              ),
-              divider20(),
-              ButtonCustonWidget(
-                text: "Iniciar sesión con Facebook",
-                icon: "facebook",
-                color: Color(0xff507CC0),
-                onPressed: () {},
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  divider10(),
-                  Text(
-                    "Aún no estás registrado?",
+                divider30(),
+                Text(
+                  "Iniciar Sesión",
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                    color: KBrandPrimaryColor,
                   ),
-                  divider10(),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RegisterPage(),
+                ),
+                divider10(),
+                TextFieldNormalWidget(
+                  hintText: "Correo electrónico",
+                  icon: Icons.email,
+                  controller: _emailcontroller,
+                ),
+                divider20(),
+                TextFieldPasswordWidget(
+                  controller: _passwordcontroller,
+                ),
+                divider20(),
+                ButtonCustonWidget(
+                  text: "Iniciar Sesión",
+                  icon: "check",
+                  color: KBrandPrimaryColor,
+                  onPressed: () {
+                    _login();
+                  },
+                ),
+                divider20(),
+                Text(
+                  "O ingresa con tus redes sociales",
+                ),
+                divider20(),
+                ButtonCustonWidget(
+                  text: "Iniciar sesión con Google",
+                  icon: "google",
+                  color: Color(0xfff84b2a),
+                  onPressed: () {
+                    _loginWithGoogle();
+                  },
+                ),
+                divider20(),
+                ButtonCustonWidget(
+                  text: "Iniciar sesión con Facebook",
+                  icon: "facebook",
+                  color: Color(0xff507CC0),
+                  onPressed: () {},
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    divider10(),
+                    Text(
+                      "Aún no estás registrado?",
+                    ),
+                    divider10(),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Registrate",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: KBrandPrimaryColor,
                         ),
-                      );
-                    },
-                    child: Text(
-                      "Registrate",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: KBrandPrimaryColor,
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
