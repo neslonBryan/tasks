@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tasks/models/task_model.dart';
+import 'package:tasks/pages/login_page.dart';
 import 'package:tasks/ui/general/colors.dart';
 import 'package:tasks/ui/widgets/button_normal_widget.dart';
 import 'package:tasks/ui/widgets/general_widgets.dart';
@@ -93,21 +94,42 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Bienvenido ,Ramón",
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w500,
-                        color: KBrandPrimaryColor,
-                      ),
-                    ),
-                    Text(
-                      "Mis Tareas",
-                      style: TextStyle(
-                        fontSize: 36.0,
-                        fontWeight: FontWeight.w600,
-                        color: KBrandPrimaryColor,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              "Bienvenido ,Ramón",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w500,
+                                color: KBrandPrimaryColor,
+                              ),
+                            ),
+                            Text(
+                              "Mis Tareas",
+                              style: TextStyle(
+                                fontSize: 36.0,
+                                fontWeight: FontWeight.w600,
+                                color: KBrandPrimaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()),
+                                (route) => false);
+                          },
+                          icon: Icon(
+                            Icons.exit_to_app,
+                          ),
+                        ),
+                      ],
                     ),
                     divider10(),
                     TextFieldNormalWidget(

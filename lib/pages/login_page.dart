@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tasks/pages/homepage.dart';
 import 'package:tasks/pages/register_pages.dart';
 import 'package:tasks/ui/general/colors.dart';
@@ -49,7 +50,15 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  _loginWithGoogle() {}
+  _loginWithGoogle() {
+    showSnackBarError(
+        context, "Este servicio esta deshabilitado temporalmente");
+  }
+
+  _loginWithFacebook() {
+    showSnackBarError(
+        context, "Este servicio esta deshabilitado temporalmente");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +107,9 @@ class _LoginPageState extends State<LoginPage> {
                 divider20(),
                 Text(
                   "O ingresa con tus redes sociales",
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
                 ),
                 divider20(),
                 ButtonCustonWidget(
@@ -113,16 +125,21 @@ class _LoginPageState extends State<LoginPage> {
                   text: "Iniciar sesión con Facebook",
                   icon: "facebook",
                   color: Color(0xff507CC0),
-                  onPressed: () {},
+                  onPressed: () {
+                    _loginWithFacebook();
+                  },
                 ),
+                divider10(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     divider10(),
                     Text(
-                      "Aún no estás registrado?",
+                      "¿Aún no estás registrado?",
+                      style: TextStyle(fontSize: 20),
                     ),
                     divider10(),
+                    divider10Width(),
                     InkWell(
                       onTap: () {
                         Navigator.push(
@@ -133,11 +150,11 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       },
                       child: Text(
-                        "Registrate",
+                        "Registrate!!",
                         style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          color: KBrandPrimaryColor,
-                        ),
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 0, 3, 204),
+                            fontSize: 20),
                       ),
                     ),
                   ],
