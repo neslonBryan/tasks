@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:tasks/models/user_model.dart';
+import 'package:tasks/pages/homepage.dart';
+import 'package:tasks/services/my_service_firestore.dart';
 
 import '../ui/general/colors.dart';
 import '../ui/widgets/button_custom_widget.dart';
@@ -21,6 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailcontroller = TextEditingController();
   final TextEditingController _passwordcontroller = TextEditingController();
   final TextEditingController _fullNamecontroller = TextEditingController();
+  MyServiceFirestore userService = MyServiceFirestore(collection: "users");
 
   _registerUser() async {
     try {
@@ -30,6 +34,18 @@ class _RegisterPageState extends State<RegisterPage> {
           email: _emailcontroller.text,
           password: _passwordcontroller.text,
         );
+        if (userCredential.user != null) {
+          UserModel userModel = UserModel(
+            fullName: _fullNamecontroller.text,
+            email: _emailcontroller.text,
+          );
+          userService.addUser(userModel).then((value) {
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+                (route) => false);
+          });
+        }
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == "weak-password") {
